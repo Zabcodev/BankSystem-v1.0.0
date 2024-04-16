@@ -44,7 +44,7 @@ class Cuenta:
         ''' METODO DEPOSITAR PARA CUENTA '''
 
         if isinstance(monto, (int, float)) and monto >= 0:
-            self.__saldo += monto
+            self.__saldo += float(monto)
 
 
     def retirar(self, monto):
@@ -52,4 +52,4 @@ class Cuenta:
         ''' METODO RETIRAR PARA CUENTA '''
         
         if isinstance(monto, (int,float)) and monto >= 0:
-            self.__saldo -= monto
+            self.__saldo -= float(monto)

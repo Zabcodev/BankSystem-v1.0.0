@@ -13,7 +13,7 @@ def validate_int(input_text, message_error):
         try:
             number = int(number)
             if number > 0:
-                return number
+                return int(number)
             else:
                 print('El numero debe ser mayor que 0')
         except ValueError:
@@ -25,7 +25,7 @@ def validate_float(input_text):
         try:
             number_float = float(number_float)
             if number_float > 0.00:
-                return format(float(number_float), '.2f')
+                return float(number_float)
             else:
                 print('El numero debe ser mayor que 0')
         except ValueError:

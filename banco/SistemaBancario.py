@@ -115,13 +115,12 @@ class SistemaBancario:
         print('\n')
         print('---------- CREAR CUENTA BANCARIA ----------')
         print('-------------------------------------------')
-        usuario = self.sesion
-        if len(usuario.get_cuentas()) > 0:
+        if len(self.sesion.get_cuentas()) > 0:
             print('\nYa posee cuenta bancaria.')
         else:
             numero_cuenta = generate_number_account()
             saldo_inicial = validate_saldo('Saldo inicial: ')
-            usuario.set_cuentas(Cuenta(numero_cuenta, saldo_inicial))
+            self.sesion.set_cuentas(Cuenta(numero_cuenta, saldo_inicial))
             print('----------------------------------------------')
             print(f'Su nuevo numero de cuenta es: {numero_cuenta}')
             print(f'\nSaldo de la cuenta: {saldo_inicial}$')
@@ -135,12 +134,11 @@ class SistemaBancario:
         print('\n')
         print('---------- DEPOSITAR DINERO ----------')
         print('--------------------------------------')
-        usuario = self.sesion
-        if usuario.get_cuentas() is None:
+        if len(self.sesion.get_cuentas()) == 0:
             print('\nNo posee cuentas bancarias, debe crear una.')
         else:
             saldo_depositar = validate_saldo('Saldo a depositar: ')
-            cuenta_origen = usuario.get_cuentas()
+            cuenta_origen = self.sesion.get_cuentas()
             cuenta_origen[0].depositar(float(saldo_depositar))
             print('\nDeposito realizado con exito')
             print(f'\nSaldo: {cuenta_origen[0].get_saldo()}')
@@ -153,12 +151,11 @@ class SistemaBancario:
         print('\n')
         print('---------- RETIRAR DINERO ----------')
         print('------------------------------------')
-        usuario = self.sesion
-        if usuario.get_cuentas() is None:
+        if len(self.sesion.get_cuentas()) == 0:
             print('\nNo posee cuentas bancarias, debe crear una.')
         else:
             saldo_retirar = validate_saldo('Saldo a retirar: ')
-            cuenta_origen = usuario.get_cuentas()
+            cuenta_origen = self.sesion.get_cuentas()
             if cuenta_origen[0].get_saldo() >= saldo_retirar:
                 cuenta_origen[0].retirar(saldo_retirar)
                 print('\nRetiro realizado con exito.')
@@ -173,16 +170,16 @@ class SistemaBancario:
         print('\n')
         print('---------- TRANSFERIR DINERO ----------')
         print('---------------------------------------')
-        usuario = self.sesion
-        if usuario.get_cuentas() is None:
+        
+        if len(self.sesion.get_cuentas()) == 0:
             print('\nNo posee cuentas bancarias, debe crear una.')
         else:
             cedula_usuario_destino = validate_cedula('\nCedula de la persona a transferir: ')
-            usuario_destino = [usuario for usuario in self.lista_usuarios if usuario.get_cedula() == cedula_usuario_destino]
-            while len(usuario_destino) == 0:
+            while len([usuario for usuario in self.lista_usuarios if usuario.get_cedula() == cedula_usuario_destino]) == 0:
                 print('\nLa cedula proporcionada no pertenece a ningun usuario. Intente nuevamente')
                 cedula_usuario_destino = validate_cedula('Cedula de la persona a transferir: ')
             
+            usuario_destino = [usuario for usuario in self.lista_usuarios if usuario.get_cedula() == cedula_usuario_destino]
             print('------------------------------------------------------------------------------')
             print(f'Datos del usuario encontrado: ')
             print(f'\nCedula: {cedula_usuario_destino}')
@@ -195,18 +192,18 @@ class SistemaBancario:
                 print('Numero de cuenta incorrecto.')
             else:
                 print('-----------------------------------------------------')
-                print(f'Saldo actual: {usuario.get_cuentas()[0].get_saldo()}')
+                print(f'Saldo actual: {self.sesion.get_cuentas()[0].get_saldo()}')
                 saldo_a_transferir = validate_saldo('Saldo a transferir: ')
                 print('-----------------------------------------------------')
-                if saldo_a_transferir > usuario.get_cuentas()[0].get_saldo():
+                if saldo_a_transferir > self.sesion.get_cuentas()[0].get_saldo():
                     print('\nFondos insuficientes.')
                 else:
                     print('-----------------------------------------------------')
                     usuario_destino[0].get_cuentas()[0].depositar(saldo_a_transferir)
-                    usuario.get_cuentas()[0].retirar(saldo_a_transferir)
+                    self.sesion.get_cuentas()[0].retirar(saldo_a_transferir)
                     print('\nTransferencia realizada con exito.')
                     print(f'Saldo transferido: {saldo_a_transferir}')
-                    print(f'Saldo restante: {usuario.get_cuentas()[0].get_saldo()}')
+                    print(f'Saldo restante: {self.sesion.get_cuentas()[0].get_saldo()}')
                     print('-----------------------------------------------------')
 
             
