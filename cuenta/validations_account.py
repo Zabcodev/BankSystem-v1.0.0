@@ -1,13 +1,27 @@
-from validations import validate_not_empty
+from validations import validate_int, validate_float
+from random import randint
 
-def validate_account_number(input_text) -> str:
-    value = validate_not_empty(input_text)
 
-    while not value.isdigit():
-        print('El numero de cuenta debe ser un entero de 12 digitos.')
-        value = input(input_text)
+def validate_account_number(input_text):
 
-    return int(value)
+    ''' FUNCION PARA VALIDAR EL NUMERO DE CUENTA '''
 
-def validate_saldo():
-    pass
+    number_account = validate_int(input_text, 'El numero de cuenta debe estar contenido por numeros enteros.')
+    return int(number_account)
+
+
+def validate_saldo(input_text):
+
+    ''' FUNCION PARA VALIDAR EL SALDO '''
+
+    saldo = validate_float(input_text)
+    return float(saldo)
+
+
+def generate_number_account():
+
+    ''' FUNCION PARA GENERAR EL NUMERO DE CUENTA ALEATORIO '''
+
+    number_account = randint(1, 999999999999)
+    return number_account
+
