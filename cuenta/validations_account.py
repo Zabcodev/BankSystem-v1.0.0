@@ -15,7 +15,7 @@ def validate_saldo(input_text):
     ''' FUNCION PARA VALIDAR EL SALDO '''
 
     saldo = validate_float(input_text)
-    return float(saldo)
+    return float(round(saldo, 2))
 
 
 def generate_number_account():

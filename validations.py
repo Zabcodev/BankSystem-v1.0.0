@@ -25,7 +25,7 @@ def validate_float(input_text):
         try:
             number_float = float(number_float)
             if number_float > 0.00:
-                return float(number_float)
+                return number_float
             else:
                 print('El numero debe ser mayor que 0')
         except ValueError:
